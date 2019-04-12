@@ -3,7 +3,9 @@ package com.serg;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Dot extends Shape {
+import com.serg.abstraction.Object3D;
+
+public class Dot extends Object3D {
 
 	public Dot() {
 	}

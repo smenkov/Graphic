@@ -1,4 +1,4 @@
-package com.serg;
+package com.serg.abstraction;
 
 import java.awt.Graphics;
 

@@ -1,18 +1,21 @@
-package com.serg;
+package com.serg.serve;
 
 import java.util.ArrayList;
+
+import com.serg.abstraction.Frame;
+import com.serg.abstraction.Object3D;
 
 public class MainThread extends Thread {
 
 	private boolean isRunning;
 	private long millis;
 	private Frame mainFrame;
-	private ArrayList<Shape> shapes;
+	private ArrayList<Object3D> materialObjects;
 
-	public MainThread(Frame mainFrame, ArrayList<Shape> shapes) {
+	public MainThread(Frame mainFrame, ArrayList<Object3D> materialObjects) {
 		super();
 		this.mainFrame = mainFrame;
-		this.shapes = shapes;
+		this.materialObjects = materialObjects;
 
 	}
 
@@ -21,13 +24,13 @@ public class MainThread extends Thread {
 		super.run();
 		isRunning = true;
 		while (isRunning && !isInterrupted()) {
-			for (Shape s : shapes) {
+			for (Object3D s : materialObjects) {
 				s.move(0.5, 1, 0);
 			}
-			mainFrame.draw(shapes);
-			
+			mainFrame.draw(materialObjects);
+
 			try {
-				sleep(19);
+				sleep(30);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -36,7 +39,6 @@ public class MainThread extends Thread {
 
 	}
 
-	
 	public void stop_() {
 		setRunning(false);
 		mainFrame.close();
@@ -58,7 +60,5 @@ public class MainThread extends Thread {
 	public void setMillis(long millis) {
 		this.millis = millis;
 	}
-	
-	
-	
+
 }
