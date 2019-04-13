@@ -24,7 +24,6 @@ public abstract class Geometry3D implements Drawable, Movable {
 
 	}
 
-	@Override
 	public void rotate(double dx, double dy, double dz) {
 		// x-axis
 		y_l = y_l * Math.cos(dx) - z_l * Math.sin(dx);

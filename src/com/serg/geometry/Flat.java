@@ -1,4 +1,4 @@
-package com.serg.Obj3D;
+package com.serg.geometry;
 
 import com.serg.abstraction.Object3D;
 

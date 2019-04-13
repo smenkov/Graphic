@@ -31,15 +31,13 @@ public abstract class Object3D implements Movable {
 		z += dz;
 	}
 
-	@Override
-	public void rotate(double dx, double dy, double dz) {
-		rX += dx;
-		rY += dy;
-		rZ += dz;
-	}
-
 	public void addGeometry(Geometry3D geometry) {
 		this.geometry.add(geometry);
+	}
+
+	public ArrayList<Geometry3D> getGeometry() {
+		// TODO Auto-generated method stub
+		return geometry;
 	}
 
 }

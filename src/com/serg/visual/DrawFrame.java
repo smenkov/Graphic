@@ -54,8 +54,9 @@ public class DrawFrame extends JFrame implements Frame {
 
 			public void paint(Graphics g) {
 				if (dBuff != null)
-					for (Drawable d : dBuff)
-						d.draw(g);
+					for (Object3D od : dBuff)
+						for (Drawable d : od.getGeometry())
+							d.draw(g);
 			}
 		};
 		add(customCanvas);
