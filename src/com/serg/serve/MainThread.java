@@ -24,6 +24,10 @@ public class MainThread extends Thread {
 		super.run();
 		isRunning = true;
 		while (isRunning && !isInterrupted()) {
+			// TODO adding new materialObjects from buffer ->
+
+			//////////////
+			// Draw objects ->
 			for (Object3D s : materialObjects) {
 				s.move(0.5, 1, 0);
 			}
@@ -32,7 +36,7 @@ public class MainThread extends Thread {
 			try {
 				sleep(30);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+				// TODO add correct ending
 				e.printStackTrace();
 			}
 		}

@@ -16,7 +16,7 @@ public class Vector extends Geometry3D {
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
+		// TODO no draw now
 
 	}
 

@@ -34,9 +34,11 @@ public abstract class Geometry3D implements Drawable, Movable {
 		double old_y = local_y;
 		double old_z = local_z;
 
+		// the rotate matrix -> doing successively
+
 		// x-axis
-		local_y = old_y * Math.cos(angle_x) - old_z * Math.sin(angle_x);// -1
-		local_z = old_y * Math.sin(angle_x) + old_z * Math.cos(angle_x);// 0
+		local_y = old_y * Math.cos(angle_x) - old_z * Math.sin(angle_x);
+		local_z = old_y * Math.sin(angle_x) + old_z * Math.cos(angle_x);
 		// y-axis
 		old_x = local_x;
 		old_y = local_y;

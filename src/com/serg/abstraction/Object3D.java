@@ -39,6 +39,7 @@ public abstract class Object3D implements Movable {
 		this.angle_x += angle_x;
 		this.angle_y += angle_y;
 		this.angle_z += angle_z;
+		// rotate all geometry around local axis
 		for (Geometry3D g : geometry)
 			g.rotate(this.angle_x, this.angle_y, this.angle_z);
 	}
