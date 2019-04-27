@@ -4,60 +4,75 @@ import java.util.ArrayList;
 
 public abstract class Geometry3D implements Drawable, Movable {
 
-	private double x_l;
-	private double y_l;
-	private double z_l;
+	private double local_x;
+	private double local_y;
+	private double local_z;
+	private Object3D parent;
 
 	private ArrayList<Geometry3D> linked;
 
-	public Geometry3D(double x_l, double y_l, double z_l) {
-		this.x_l = x_l;
-		this.y_l = y_l;
-		this.z_l = z_l;
+	public Geometry3D(double local_x, double local_y, double local_z, Object3D parent) {
+		this.local_x = local_x;
+		this.local_y = local_y;
+		this.local_z = local_z;
+		this.parent = parent;
 	}
 
 	@Override
 	public void move(double dx, double dy, double dz) {
-		x_l += dx;
-		y_l += dy;
-		z_l += dz;
+		local_x += dx;
+		local_y += dy;
+		local_z += dz;
 
 	}
 
-	public void rotate(double dx, double dy, double dz) {
+	public void rotate(double angle_x, double angle_y, double angle_z) {
+		angle_x = Math.toRadians(angle_x);
+		angle_y = Math.toRadians(angle_y);
+		angle_z = Math.toRadians(angle_z);
+		double old_x = local_x;
+		double old_y = local_y;
+		double old_z = local_z;
+
 		// x-axis
-		y_l = y_l * Math.cos(dx) - z_l * Math.sin(dx);
-		z_l = y_l * Math.sin(dx) + z_l * Math.cos(dx);
+		local_y = old_y * Math.cos(angle_x) - old_z * Math.sin(angle_x);// -1
+		local_z = old_y * Math.sin(angle_x) + old_z * Math.cos(angle_x);// 0
 		// y-axis
-		x_l = x_l * Math.cos(dy) + z_l * Math.sin(dy);
-		z_l = y_l * Math.cos(dy) - x_l * Math.sin(dy);
+		old_x = local_x;
+		old_y = local_y;
+		old_z = local_z;
+		local_x = old_x * Math.cos(angle_y) + old_z * Math.sin(angle_y);
+		local_z = old_z * Math.cos(angle_y) - old_x * Math.sin(angle_y);
 		// z-axis
-		x_l = x_l * Math.cos(dz) - y_l * Math.sin(dy);
-		y_l = x_l * Math.sin(dz) + y_l * Math.cos(dy);
+		old_x = local_x;
+		old_y = local_y;
+		old_z = local_z;
+		local_x = old_x * Math.cos(angle_z) - old_y * Math.sin(angle_z);
+		local_y = old_x * Math.sin(angle_z) + old_y * Math.cos(angle_z);
 	}
 
-	public double getX_l() {
-		return x_l;
+	public double getLocal_x() {
+		return local_x;
 	}
 
-	public void setX_l(double x_l) {
-		this.x_l = x_l;
+	public void setLocal_x(double local_x) {
+		this.local_x = local_x;
 	}
 
-	public double getY_l() {
-		return y_l;
+	public double getLocal_y() {
+		return local_y;
 	}
 
-	public void setY_l(double y_l) {
-		this.y_l = y_l;
+	public void setLocal_y(double local_y) {
+		this.local_y = local_y;
 	}
 
-	public double getZ_l() {
-		return z_l;
+	public double getLocal_z() {
+		return local_z;
 	}
 
-	public void setZ_l(double z_l) {
-		this.z_l = z_l;
+	public void setLocal_z(double local_z) {
+		this.local_z = local_z;
 	}
 
 	public ArrayList<Geometry3D> getLinked() {
@@ -66,6 +81,22 @@ public abstract class Geometry3D implements Drawable, Movable {
 
 	public void setLinked(ArrayList<Geometry3D> linked) {
 		this.linked = linked;
+	}
+
+	public double getGlobal_x() {
+		return parent != null ? parent.getX() + local_x : local_x;
+	}
+
+	public double getGlobal_y() {
+		return parent != null ? parent.getY() + local_y : local_y;
+	}
+
+	public double getGlobal_z() {
+		return parent != null ? parent.getZ() + local_z : local_z;
+	}
+
+	public Object3D getParent() {
+		return parent;
 	}
 
 }
