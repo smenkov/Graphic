@@ -32,11 +32,10 @@ public class Camera extends Object3D {
 		double c_d = vN.getLocal_x() * getX() + vN.getLocal_y() * getY() + vN.getLocal_z() * getZ();
 		// @pos - distance @geom relative plane vN.x * x + vN.y * y + vN.z * z = d + c_d
 		// //
-		double pos = vN.getGlobal_x() * geom.getGlobal_x() + vN.getGlobal_y() * geom.getGlobal_y()
-				+ vN.getGlobal_z() * geom.getGlobal_z() - d - c_d;
+		double pos = vN.getX() * geom.getX() + vN.getY() * geom.getY() + vN.getZ() * geom.getZ() - d - c_d;
 		// pos >= 0 then camera direct on the object
 		if (pos >= 0) {
-			Vector vP = new Vector(geom.getGlobal_x(), geom.getGlobal_y(), geom.getGlobal_z());
+			Vector vP = new Vector(geom.getX(), geom.getY(), geom.getZ());
 			// calculate arcCos from scalar vector multiplication
 			double degrees = Math
 					.toDegrees(Math.acos(Vector.getScalarMultiplication(vP, vN) / (vP.getLength() * vN.getLength())));
@@ -48,35 +47,35 @@ public class Camera extends Object3D {
 
 	public Vector getVectorProjection(Geometry3D geom) {
 		// crate vector to @geom from 0,0,0 xyz
-		Vector vP = new Vector(geom.getGlobal_x(), geom.getGlobal_y(), geom.getGlobal_z());
+		Vector vP = new Vector(geom.getX(), geom.getY(), geom.getZ());
 
 		// check vP visible
 		if (canSee(vP)) {
 
 			double c_d = vN.getLocal_x() * getX() + vN.getLocal_y() * getY() + vN.getLocal_z() * getZ();
 			// Vector from camera focus to point geom
-			Vector c_vp = new Vector(vP.getGlobal_x() - getX(), vP.getGlobal_y() - getY(), vP.getGlobal_z() - getZ());
+			Vector c_vp = new Vector(vP.getX() - getX(), vP.getY() - getY(), vP.getZ() - getZ());
 			double vp$n = Vector.getScalarMultiplication(vP, vN);
 			double c_vp$n = Vector.getScalarMultiplication(c_vp, vN);
 			// result - point x y z which belongs the projection plane
-			Vector result = new Vector(vP.getGlobal_x() - c_vp.getGlobal_x() * (vp$n - d - c_d) / c_vp$n,
-					vP.getGlobal_y() - c_vp.getGlobal_y() * (vp$n - d - c_d) / c_vp$n,
-					vP.getGlobal_z() - c_vp.getGlobal_z() * (vp$n - d - c_d) / c_vp$n);
+			Vector result = new Vector(vP.getX() - c_vp.getX() * (vp$n - d - c_d) / c_vp$n,
+					vP.getY() - c_vp.getY() * (vp$n - d - c_d) / c_vp$n,
+					vP.getZ() - c_vp.getZ() * (vp$n - d - c_d) / c_vp$n);
 			// calculate x y 2D relative the center [A] of projection plane //
-			Vector vAP = new Vector(result.getGlobal_x() - vN.getGlobal_x() * d,
-					result.getGlobal_y() - vN.getGlobal_y() * d, result.getGlobal_z() - vN.getGlobal_z() * d);
-			double x = vAP.getGlobal_x() * (vY.getGlobal_y() * vN.getGlobal_z() - vY.getGlobal_z() * vN.getGlobal_y())
-					- vY.getGlobal_x() * (vAP.getGlobal_y() * vN.getGlobal_z() - vAP.getGlobal_z() * vN.getGlobal_y())
-					+ vN.getGlobal_x() * (vAP.getGlobal_y() * vY.getGlobal_z() - vAP.getGlobal_z() * vY.getGlobal_y());
+			Vector vAP = new Vector(result.getX() - vN.getX() * d, result.getY() - vN.getY() * d,
+					result.getZ() - vN.getZ() * d);
+			double x = vAP.getX() * (vY.getY() * vN.getZ() - vY.getZ() * vN.getY())
+					- vY.getX() * (vAP.getY() * vN.getZ() - vAP.getZ() * vN.getY())
+					+ vN.getX() * (vAP.getY() * vY.getZ() - vAP.getZ() * vY.getY());
 
-			double y = vX.getGlobal_x() * (vAP.getGlobal_y() * vN.getGlobal_z() - vAP.getGlobal_z() * vN.getGlobal_y())
-					- vAP.getGlobal_x() * (vX.getGlobal_y() * vN.getGlobal_z() - vX.getGlobal_z() * vN.getGlobal_y())
-					+ vN.getGlobal_x() * (vX.getGlobal_y() * vAP.getGlobal_z() - vX.getGlobal_z() * vAP.getGlobal_y());
+			double y = vX.getX() * (vAP.getY() * vN.getZ() - vAP.getZ() * vN.getY())
+					- vAP.getX() * (vX.getY() * vN.getZ() - vX.getZ() * vN.getY())
+					+ vN.getX() * (vX.getY() * vAP.getZ() - vX.getZ() * vAP.getY());
 
 			// z always equals 0 because vector AP belong the XaY plane
-			double z = vX.getGlobal_x() * (vY.getGlobal_y() * vAP.getGlobal_z() - vY.getGlobal_z() * vAP.getGlobal_y())
-					- vY.getGlobal_x() * (vX.getGlobal_y() * vAP.getGlobal_z() - vX.getGlobal_z() * vAP.getGlobal_y())
-					+ vAP.getGlobal_x() * (vX.getGlobal_y() * vY.getGlobal_z() - vX.getGlobal_z() * vY.getGlobal_y());
+			double z = vX.getX() * (vY.getY() * vAP.getZ() - vY.getZ() * vAP.getY())
+					- vY.getX() * (vX.getY() * vAP.getZ() - vX.getZ() * vAP.getY())
+					+ vAP.getX() * (vX.getY() * vY.getZ() - vX.getZ() * vY.getY());
 
 			return new Vector(x, y, z);
 

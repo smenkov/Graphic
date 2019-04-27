@@ -85,15 +85,15 @@ public abstract class Geometry3D implements Drawable, Movable {
 		this.linked = linked;
 	}
 
-	public double getGlobal_x() {
+	public double getX() {
 		return parent != null ? parent.getX() + local_x : local_x;
 	}
 
-	public double getGlobal_y() {
+	public double getY() {
 		return parent != null ? parent.getY() + local_y : local_y;
 	}
 
-	public double getGlobal_z() {
+	public double getZ() {
 		return parent != null ? parent.getZ() + local_z : local_z;
 	}
 
