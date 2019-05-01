@@ -1,6 +1,7 @@
 package com.serg.geometry;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 import com.serg.abstraction.Geometry3D;
 
 public class Vector extends Geometry3D {
@@ -15,7 +16,7 @@ public class Vector extends Geometry3D {
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g2d) {
 		// TODO no draw now
 
 	}

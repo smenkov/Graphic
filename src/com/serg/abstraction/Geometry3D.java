@@ -7,6 +7,9 @@ public abstract class Geometry3D implements Drawable, Movable {
 	private double local_x;
 	private double local_y;
 	private double local_z;
+	private double x_2D;
+	private double y_2D;
+	
 	private Object3D parent;
 
 	private ArrayList<Geometry3D> linked;
@@ -27,9 +30,9 @@ public abstract class Geometry3D implements Drawable, Movable {
 	}
 
 	public void rotate(double angle_x, double angle_y, double angle_z) {
-		angle_x = Math.toRadians(angle_x);
-		angle_y = Math.toRadians(angle_y);
-		angle_z = Math.toRadians(angle_z);
+		//angle_x = Math.toRadians(angle_x);
+		//angle_y = Math.toRadians(angle_y);
+		//angle_z = Math.toRadians(angle_z);
 		double old_x = local_x;
 		double old_y = local_y;
 		double old_z = local_z;
@@ -101,4 +104,23 @@ public abstract class Geometry3D implements Drawable, Movable {
 		return parent;
 	}
 
+	public double getX_2D() {
+		return x_2D;
+	}
+
+	public void setX_2D(double x_2d) {
+		x_2D = x_2d;
+	}
+
+	public double getY_2D() {
+		return y_2D;
+	}
+
+	public void setY_2D(double y_2d) {
+		y_2D = y_2d;
+	}
+
+	
+	
+	
 }

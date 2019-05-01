@@ -3,6 +3,7 @@ package com.serg.Obj3D;
 import com.serg.abstraction.Geometry3D;
 import com.serg.abstraction.Object3D;
 import com.serg.geometry.Vector;
+import com.serg.visual.DrawFrame;
 
 public class Camera extends Object3D {
 
@@ -12,7 +13,7 @@ public class Camera extends Object3D {
 	private double d = 5.0;
 
 	public Camera(double x, double y, double z) {
-		super(x, y, z);
+		super(x, y, z, true);
 		// X Y Z - camera focus coordinates
 
 		// vX - The final X axis
@@ -22,6 +23,7 @@ public class Camera extends Object3D {
 		// vN - Normal vector of the projection plane
 		vN = new Vector(0, 0, 1);
 		// add geometry to storage for rotate and move ability
+
 		addGeometry(vX);
 		addGeometry(vY);
 		addGeometry(vN);
@@ -45,7 +47,7 @@ public class Camera extends Object3D {
 		return false;
 	}
 
-	public Vector getVectorProjection(Geometry3D geom) {
+	public void update2DCoordinates(Geometry3D geom) {
 		// crate vector to @geom from 0,0,0 xyz
 		Vector vP = new Vector(geom.getX(), geom.getY(), geom.getZ());
 
@@ -77,11 +79,13 @@ public class Camera extends Object3D {
 					- vY.getX() * (vX.getY() * vAP.getZ() - vX.getZ() * vAP.getY())
 					+ vAP.getX() * (vX.getY() * vY.getZ() - vX.getZ() * vY.getY());
 
-			return new Vector(x, y, z);
-
+			geom.setX_2D(x);
+			geom.setY_2D(y);
+			// System.out.println(x+": -x");
+			// System.out.println(y+": -y");
 		} else {
-			System.out.println("Can`t see this object!");
-			return null;
+			geom.setX_2D(DrawFrame.WIDTH + 1);
+			geom.setY_2D(DrawFrame.HEIGHT + 1);
 		}
 	}
 
