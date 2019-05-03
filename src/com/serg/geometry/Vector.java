@@ -34,4 +34,8 @@ public class Vector extends Geometry3D {
 		return new Vector(k * getLocal_x(), k * getLocal_y(), k * getLocal_z());
 	}
 
+	public Vector getKoleniar(double x, double y, double z) {
+		return new Vector(x * getLocal_x(), y * getLocal_y(), z * getLocal_z());
+	}
+
 }

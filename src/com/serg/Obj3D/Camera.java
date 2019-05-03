@@ -10,7 +10,7 @@ public class Camera extends Object3D {
 	private Vector vN;
 	private Vector vX;
 	private Vector vY;
-	private double d = 5.0;
+	private double d = 1.0;
 
 	public Camera(double x, double y, double z) {
 		super(x, y, z, true);
@@ -35,9 +35,10 @@ public class Camera extends Object3D {
 		// @pos - distance @geom relative plane vN.x * x + vN.y * y + vN.z * z = d + c_d
 		// //
 		double pos = vN.getX() * geom.getX() + vN.getY() * geom.getY() + vN.getZ() * geom.getZ() - d - c_d;
+
 		// pos >= 0 then camera direct on the object
 		if (pos >= 0) {
-			Vector vP = new Vector(geom.getX(), geom.getY(), geom.getZ());
+			Vector vP = new Vector(geom.getX() - getX(), geom.getY() - getY(), geom.getZ() - getZ());
 			// calculate arcCos from scalar vector multiplication
 			double degrees = Math
 					.toDegrees(Math.acos(Vector.getScalarMultiplication(vP, vN) / (vP.getLength() * vN.getLength())));
@@ -63,26 +64,22 @@ public class Camera extends Object3D {
 			Vector result = new Vector(vP.getX() - c_vp.getX() * (vp$n - d - c_d) / c_vp$n,
 					vP.getY() - c_vp.getY() * (vp$n - d - c_d) / c_vp$n,
 					vP.getZ() - c_vp.getZ() * (vp$n - d - c_d) / c_vp$n);
+
 			// calculate x y 2D relative the center [A] of projection plane //
-			Vector vAP = new Vector(result.getX() - vN.getX() * d, result.getY() - vN.getY() * d,
-					result.getZ() - vN.getZ() * d);
-			double x = vAP.getX() * (vY.getY() * vN.getZ() - vY.getZ() * vN.getY())
-					- vY.getX() * (vAP.getY() * vN.getZ() - vAP.getZ() * vN.getY())
-					+ vN.getX() * (vAP.getY() * vY.getZ() - vAP.getZ() * vY.getY());
+			Vector AR = new Vector(result.getX() - (vN.getX() * d + getX()), result.getY() - (vN.getY() * d + getY()),
+					result.getZ() - (vN.getZ() * d + getZ()));
 
-			double y = vX.getX() * (vAP.getY() * vN.getZ() - vAP.getZ() * vN.getY())
-					- vAP.getX() * (vX.getY() * vN.getZ() - vX.getZ() * vN.getY())
-					+ vN.getX() * (vX.getY() * vAP.getZ() - vX.getZ() * vAP.getY());
+			double x = AR.getX() * (vY.getY() * vN.getZ() - vY.getZ() * vN.getY())
+					- vY.getX() * (AR.getY() * vN.getZ() - AR.getZ() * vN.getY())
+					+ vN.getX() * (AR.getY() * vY.getZ() - AR.getZ() * vY.getY());
 
-			// z always equals 0 because vector AP belong the XaY plane
-			double z = vX.getX() * (vY.getY() * vAP.getZ() - vY.getZ() * vAP.getY())
-					- vY.getX() * (vX.getY() * vAP.getZ() - vX.getZ() * vAP.getY())
-					+ vAP.getX() * (vX.getY() * vY.getZ() - vX.getZ() * vY.getY());
+			double y = vX.getX() * (AR.getY() * vN.getZ() - AR.getZ() * vN.getY())
+					- AR.getX() * (vX.getY() * vN.getZ() - vX.getZ() * vN.getY())
+					+ vN.getX() * (vX.getY() * AR.getZ() - vX.getZ() * AR.getY());
 
-			geom.setX_2D(x);
-			geom.setY_2D(y);
-			// System.out.println(x+": -x");
-			// System.out.println(y+": -y");
+			geom.setX_2D(x * 220);
+			geom.setY_2D(y * 220);
+
 		} else {
 			geom.setX_2D(DrawFrame.WIDTH + 1);
 			geom.setY_2D(DrawFrame.HEIGHT + 1);

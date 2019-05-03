@@ -13,7 +13,7 @@ public class Starter {
 		DrawFrame df = new DrawFrame("Test", 800, 600);
 		ArrayList<Object3D> arr = new ArrayList<>();
 
-		Cube cube1 = new Cube(0, 0, 20, 10, true);
+		Cube cube1 = new Cube(0, 0, 30, 5, true);
 
 		Cube cubeZ = new Cube(0, 0, 10, 1, false); // axis indicator ->
 		Cube cubeX = new Cube(10, 0, 0, 1, false); //
